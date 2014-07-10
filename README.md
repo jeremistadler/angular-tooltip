@@ -13,6 +13,7 @@ Add the files and add the module 'tooltip' to your app:
 
 Then start using the directive like:
 
+    <div tooltip="'Simple text'"></div>
     <div tooltip="'The text'" placement="top"></div>
     <div tooltip="somevariable" placement="left"></div>
     <div tooltip="somefunction()" placement="right" tip-margin="20"></div>
@@ -23,5 +24,5 @@ Then start using the directive like:
 ####Parameters
 
 * **tooltip**: the text
-* **placement**: right,left,top or bottom
-* **margin**: change the default 5px margin
+* **placement**: right,left,top or bottom  (Defaults to top)
+* **margin**: change the margin (default 5px)
