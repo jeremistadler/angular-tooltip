@@ -17,7 +17,7 @@ Then start using the directive like:
     <div tooltip="'The text'" placement="top"></div>
     <div tooltip="somevariable" placement="left"></div>
     <div tooltip="somefunction()" placement="right" tip-margin="20"></div>
-    <div tooltip="'Some other text'" placement="bottom" tip-margin="0"></div>
+    <div tooltip="'Some other text'" placement="bottom" tip-margin="-10"></div>
 	
 	
 	
@@ -25,5 +25,5 @@ Then start using the directive like:
 
 * **tooltip**: the text
 * **placement**: right,left,top or bottom (default 'top')
-* **margin**: change the margin (default 5px)
+* **margin**: change the margin (default 5px) negative margin is allowed
 
