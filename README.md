@@ -24,5 +24,5 @@ Then start using the directive like:
 ####Parameters
 
 * **tooltip**: the text
-* **placement**: right,left,top or bottom  (Defaults to top)
+* **placement**: right,left,top or bottom (default 'top')
 * **margin**: change the margin (default 5px)
