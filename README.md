@@ -1,16 +1,27 @@
-angular-tooltip
+Angular Tooltip
 ===============
 
-Angularjs tooltip without any dependencies
+Very simple Angularjs tooltip without any dependencies
 
 
 ### Usage
+
+Add the files and add the module 'tooltip' to your app:
+
+    angular.module('myApp', ['tooltip'])
+    
+
+Then start using the directive like:
 
     <div tooltip="'The text'" placement="top"></div>
     <div tooltip="somevariable" placement="left"></div>
     <div tooltip="somefunction()" placement="right" tip-margin="20"></div>
     <div tooltip="'Some other text'" placement="bottom" tip-margin="0"></div>
 	
-	tooltip: the text
-	placement: right,left,top or bottom
-	margin: change the default 5px margin
+	
+	
+####Parameters
+
+* **tooltip**: the text
+* **placement**: right,left,top or bottom
+* **margin**: change the default 5px margin
