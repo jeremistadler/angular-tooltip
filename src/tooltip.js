@@ -1,19 +1,22 @@
 'use strict';
 
-var mod = angular.module('tooltip', []);
-
-mod.factory('Popup', function ($window, $document, $timeout, $compile, $parse) {
+angular.module('tooltip', [])
+.factory('Popup', ['$window', '$document', '$timeout', '$compile', '$parse',
+function($window, $document, $timeout, $compile, $parse) {
     var openedPopup = null;
-    var template = '<div class="Tooltip" ng-init="$reposition()" ng-show="show" ng-bind="text"></div>';
+    var template = '<div class="Tooltip" ng-init="$reposition()" ng-bind="text" disabled="disabled"></div>';
 
     // Padding towards edges of screen.
     var padding = 10;
 
     function showPopup(anchor, scope, attrs) {
-        attrs.margin = parseInt(attrs.tipMargin) || 5;
-        attrs = angular.extend({ placement: 'top', margin: 5 }, attrs);
-        $timeout(function () {
-            makePopup(anchor, scope, attrs);
+        var options = {
+            placement: attrs.placement || 'top',
+            margin: parseInt(attrs.tipMargin) || 5
+        }
+
+        $timeout(function() {
+            makePopup(anchor, scope, options);
         });
     }
 
@@ -23,7 +26,7 @@ mod.factory('Popup', function ($window, $document, $timeout, $compile, $parse) {
             $timeout(function() {
                 fixPosition();
             });
-        };
+        }
 
         var element = $compile(template)(scope);
         openedPopup = {
@@ -31,7 +34,7 @@ mod.factory('Popup', function ($window, $document, $timeout, $compile, $parse) {
             options: options,
             anchor: anchor,
             scope: scope
-        };
+        }
 
         var body = $document.find('body');
         body.append(element);
@@ -46,7 +49,7 @@ mod.factory('Popup', function ($window, $document, $timeout, $compile, $parse) {
         openedPopup = null;
 
         $timeout(function() {
-            popup.el.hide().remove();
+            popup.el.remove();
         });
     }
 
@@ -67,8 +70,6 @@ mod.factory('Popup', function ($window, $document, $timeout, $compile, $parse) {
         var parent = offset(openedPopup.anchor);
         var placement = openedPopup.options.placement;
         var element = openedPopup.el;
-
-        console.log("inner: " + element.height() + " outer: " + element.outerHeight());
 
         if (placement === 'right') {
             popupPosition = {
@@ -108,33 +109,31 @@ mod.factory('Popup', function ($window, $document, $timeout, $compile, $parse) {
         show: showPopup,
         close: hidePopup
     };
-});
-
-mod.directive('tooltip', function (Popup, $parse, $timeout) {
+}]).directive('tooltip', ['Popup', '$parse', '$timeout', '$rootScope',
+function(Popup, $parse, $timeout, $rootScope) {
     return {
         restrict: 'A',
         scope: { text: '=tooltip' },
         link: function(scope, element, attrs) {
-            scope.show = false;
-
             var clearTimeout = false;
-            element.mouseover(function() {
+            element.mouseenter(function() {
                 clearTimeout = false;
                 $timeout(function() {
                     if (clearTimeout == true) return;
-                    scope.show = true;
+                    $rootScope.$emit('tooltip:show')
                     Popup.show(element, scope, attrs);
-                }, 1000);
-
+                })
             })
 
             element.mouseleave(function() {
                 clearTimeout = true
-                scope.$apply(function() {
-                    scope.show = false
-                    Popup.close();
-                })
+                Popup.close();
+            })
+
+            $rootScope.$on('tooltip:show', function() {
+                clearTimeout = true
+                Popup.close();
             })
         }
     };
-});
+}]);
