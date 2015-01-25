@@ -3,8 +3,8 @@ Angular Tooltip
 
 Very simple Angularjs tooltip without any dependencies (other than angular)
 
-![Tooltip top](/images/tooltip1.png?raw=true "Tooltip top")
-![Tooltip left](/images/tooltip2.png?raw=true "Tooltip left")
+![Tooltip top](/screenshots/tooltip1.png?raw=true "Tooltip top")
+![Tooltip left](/screenshots/tooltip2.png?raw=true "Tooltip left")
 
 
 ### Usage
